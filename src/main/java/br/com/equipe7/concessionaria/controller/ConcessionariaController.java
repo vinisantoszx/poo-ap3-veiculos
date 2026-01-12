@@ -35,6 +35,42 @@ public class ConcessionariaController {
         }
         writer.close();
     }
+    
+    public boolean removerVeiculo(int index) {
+        if (index >= 0 && index < estoque.size()) {
+            estoque.remove(index);
+            return true;
+        }
+        return false;
+    }
+    
+    public String gerarRelatorio() {
+        double valorTotalEstoque = 0;
+        int qtdCarros = 0;
+        int qtdMotos = 0;
+        
+        for (Veiculo v : estoque) {
+            valorTotalEstoque += v.getPreco();
+            if (v instanceof Carro) {
+                qtdCarros++;
+            } else if (v instanceof Moto) {
+                qtdMotos++;
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("=== RELATÓRIO DE VENDA-REVISÃO ===\n\n");
+        sb.append("REVISÃO DE ESTOQUE:\n");
+        sb.append("- Total de Veículos: " + estoque.size() + "\n");
+        sb.append("- Carros: " + qtdCarros + "\n");
+        sb.append("- Motos: " + qtdMotos + "\n\n");
+        
+        sb.append("PROJEÇÃO DE VENDAS:\n");
+        sb.append(String.format("- Valor Total do Estoque: R$ %.2f\n", valorTotalEstoque));
+        
+        return sb.toString();
+    }
+
 
     public void carregarDados() throws IOException {
         File arquivo = new File("banco_dados.txt");
