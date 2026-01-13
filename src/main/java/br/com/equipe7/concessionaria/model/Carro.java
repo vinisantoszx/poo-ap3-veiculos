@@ -3,14 +3,15 @@ package br.com.equipe7.concessionaria.model;
 public class Carro extends Veiculo implements IPromocional {
     private int numPortas;
 
-    public Carro(String marca, String modelo, double preco, int numPortas) {
-        super(marca, modelo, preco);
+    public Carro(String marca, String modelo, int ano, String cor, double preco, int numPortas) {
+        super(marca, modelo, ano, cor, preco); // Passando a cor
         this.numPortas = numPortas;
     }
 
     @Override
     public String getDetalhes() {
-        return "[CARRO] " + getMarca() + " " + getModelo() + " | R$ " + getPreco() + " | Portas: " + numPortas;
+        return String.format("[CARRO] %s %s %s (%d) | R$ %.2f | %d Portas", 
+                getMarca(), getModelo(), getCor(), getAno(), getPreco(), numPortas);
     }
 
     @Override
